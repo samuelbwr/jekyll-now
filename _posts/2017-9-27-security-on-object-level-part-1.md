@@ -55,9 +55,39 @@ For simplicity and shortness sake I’ll be posting here only the very necessary
   </dependency>
 </dependencies>
 ```
+Our project structure will look something like this
+```
+├── pom.xml
+├── Spring-ACL-Part-1.iml
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── samuelbwr
+│   │   │           └── acl
+│   │   │               ├── config
+│   │   │               │   └── AclConfig.java
+│   │   │               ├── domain
+│   │   │               │   ├── Assignment.java
+│   │   │               │   ├── Course.java
+│   │   │               │   ├── Report.java
+│   │   │               │   └── User.java
+│   │   │               └── MainApplication.java
+│   │   └── resources
+│   │       ├── application.yml
+│   │       └── schema-h2.sql
+│   └── test
+│       └── java
+│           └── com
+│               └── samuelbwr
+│                   └── acl
+│                       └── MainApplicationTests.java
+```
+
 The ``AclConfig.java`` will look like this:
 ```java
 @Configuration
+//Enable the PreAuthorize and PostAuthorize and Secured annotations
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class AclConfig extends GlobalMethodSecurityConfiguration {
 
@@ -68,24 +98,33 @@ public class AclConfig extends GlobalMethodSecurityConfiguration {
 
     @Bean
     JdbcMutableAclService aclService() {
+    	// The type of MutableAclService is a JDBC one because our data is one the DB
         return new JdbcMutableAclService( dataSource, lookupStrategy(), aclCache() );
     }
-
-    LookupStrategy lookupStrategy() {
+	
+	// This has the know-how to search for ACL's
+    private LookupStrategy lookupStrategy() {
         return new BasicLookupStrategy( dataSource,
-                aclCache(), new AclAuthorizationStrategyImpl( new SimpleGrantedAuthority( "ROLE_ADMINISTRATOR" ) ), auditLogger );
+                aclCache(), 
+                new AclAuthorizationStrategyImpl( 
+                	// Role that can change the ownership and some audit configs on ACL
+                	new SimpleGrantedAuthority( "ROLE_ADMINISTRATOR" ) ), 
+                auditLogger );
     }
 
+    // Cache is always important for such a heavy loading application
     private SpringCacheBasedAclCache aclCache() {
-        return new SpringCacheBasedAclCache(
+        return new SpringCacheBasedAclCache(        		
                 new ConcurrentMapCache( "cache" ),
+                // Evaliates the permission required for the object agains the permissions stored on the ACE
                 new DefaultPermissionGrantingStrategy( auditLogger ),
-                new AclAuthorizationStrategyImpl( new SimpleGrantedAuthority( "ROLE_ACL_ADMIN" ) ) );
+                new AclAuthorizationStrategyImpl( new SimpleGrantedAuthority( "ROLE_ADMINISTRATOR" ) ) );
     }
 
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         org.springframework.security.acls.model.AclService service = aclService();
+        // Tells to the annotations that we enabled to use our cache and ACL's evaluator
         DefaultMethodSecurityExpressionHandler expressionHandler =
                 new DefaultMethodSecurityExpressionHandler();
         expressionHandler.setPermissionEvaluator( new AclPermissionEvaluator( service ) );
