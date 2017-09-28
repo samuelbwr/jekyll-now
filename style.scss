@@ -282,7 +282,13 @@ footer {
   padding: 20px 0;
   text-align: center;
 }
-
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {  
+  font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
+}
+p{
+  line-height: 1.6;
+}
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
