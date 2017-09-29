@@ -55,6 +55,7 @@ For simplicity and shortness sake I’ll be posting here only the very necessary
   </dependency>
 </dependencies>
 ```
+
 Our project structure will look something like this
 ```
 ├── pom.xml
@@ -85,7 +86,7 @@ Our project structure will look something like this
 ```
 
 The ``AclConfig.java`` will look like this:
-```java
+{% highlight java linenos %}
 @Configuration
 //Enable the PreAuthorize and PostAuthorize and Secured annotations
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -132,4 +133,4 @@ public class AclConfig extends GlobalMethodSecurityConfiguration {
         return expressionHandler;
     }
 }
-```
+{% endhighlight %}
