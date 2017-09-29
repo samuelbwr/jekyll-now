@@ -57,7 +57,7 @@ For simplicity and shortness sake I’ll be posting here only the very necessary
 ```
 
 Our project structure will look something like this
-```
+```java
 ├── pom.xml
 ├── Spring-ACL-Part-1.iml
 ├── src
@@ -86,7 +86,7 @@ Our project structure will look something like this
 ```
 
 The ``AclConfig.java`` will look like this:
-{% highlight java linenos %}
+```java
 @Configuration
 //Enable the PreAuthorize and PostAuthorize and Secured annotations
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -133,4 +133,4 @@ public class AclConfig extends GlobalMethodSecurityConfiguration {
         return expressionHandler;
     }
 }
-{% endhighlight %}
+```
