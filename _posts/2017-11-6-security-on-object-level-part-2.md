@@ -4,18 +4,18 @@ title: Security on object level with Spring ACL  —  Part 2
 published: false
 ---
 
-Enough of words, let’s dive in!
+In the [first part](https://raw.githubusercontent.com/samuelbwr/samuelbwr.github.io/master/images/spring-acl/acl.png) of this series we learned what ACL and Spring is and how is organized. In this part we're going to code a solution with it.
 
 For the following example I’m assuming you already now a little bit of Java and Spring Boot.
 We’ll be using:
 
-- Spring Boot 1.5.7 (latest now)
+- Spring Boot 1.5.9 (latest now)
 - Spring Boot JPA
 - Spring ACL 4.2.3
 - H2 Embedded DB
 - Maven
 
-For simplicity and shortness sake I’ll be posting here only the very necessary code, but all the code can be found in https://github.com/samuelbwr/Spring-ACL/tree/master/Spring-ACL-Part-1.
+For simplicity and shortness sake I’ll be posting here only the very necessary code, but all the code can be found on [this git repo](https://github.com/samuelbwr/Spring-ACL/tree/master/Spring-ACL-Part-1).
 
 ```xml
 <dependencies>
@@ -31,7 +31,7 @@ For simplicity and shortness sake I’ll be posting here only the very necessary
   <dependency>
     <groupId>org.springframework.security</groupId>
     <artifactId>spring-security-acl</artifactId>
-    <version>4.2.3.RELEASE</version>
+    <version>5.0.0.RELEASE</version>
   </dependency>
   <dependency>
     <groupId>org.springframework.boot</groupId>

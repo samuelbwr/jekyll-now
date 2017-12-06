@@ -15,19 +15,22 @@ As the name states ACL isn't much more than a list, a list that keeps a director
 
 If we take the AWS S3 as example, we can enter in a bucket page and access the Permissions tab to view the page below.
 
-![Spring ACL populated schema](https://raw.githubusercontent.com/samuelbwr/samuelbwr.github.io/master/images/spring-acl/acl.png)
+![AWS S3 Permissions](https://raw.githubusercontent.com/samuelbwr/samuelbwr.github.io/master/images/spring-acl/acl.png)
 
 It just don't go far from that. The account, the bucket itself and the permission. Plain simple.
 
 Of course, you can specify a more complex approach on the Bucket Policy, but that's not required.
 
 ### How Spring implements ACL?
-In Spring, Spring ACL is a part of the ecosystem that takes care of Domain Object Security, it guards every tiny Domain Object, according to some specified rules, leaving the Authentication and the Method Invocation security to the Spring Security.
+Spring ACL is a part of the Spring ecosystem that takes care of Domain Object Security, it guards every tiny Domain Object, according to some specified rules, leaving the Authentication and the Method Invocation security to the Spring Security.
+
+Spring ACL apply a more Object-Oriented approach to the ACL's, dividing Identifiers ( User or Group ) and the Domain Object's into two separate classes, and uniting them in another one.
+
 The key concepts, and also the database tables, that one have to know to deal with Spring ACL are:
 
- - Security IDentity (SID): It’s the identifier and can be a user or group;
+ - **S**ecurity **ID**entity (SID): It’s the identifier and can be a user or group;
  - Object Identity: Keeps information about each Domain Object on the system.
- - Access Control Entity (ACE): It’s the bond between domain objects, permissions and SID’s.
+ - **A**ccess **C**ontrol **E**ntity (ACE): It’s the bond between domain objects, permissions and SID’s.
  - Class: The identification of a domain object class. Simple as that.
 
 The diagram below shows how is the schema and how would the parts be populated.
